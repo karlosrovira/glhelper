@@ -40,6 +40,8 @@ PKG_CHECK_MODULES(GLEW, [glew], [], [
 			       AC_MSG_ERROR([GLEW required]))
 		  ])
 
+PKG_CHECK_MODULES(SDL2, [sdl2], [AC_DEFINE([HAVE_SDL], [1], [Define if SDL2 is available.])], [])
+
 # Checks for header files.
 
 # Checks for typedefs, structures, and compiler characteristics.

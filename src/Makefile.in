@@ -133,8 +133,10 @@ am__v_AR_0 = @echo "  AR      " $@;
 am__v_AR_1 = 
 libglh_a_AR = $(AR) $(ARFLAGS)
 libglh_a_LIBADD =
-am_libglh_a_OBJECTS = glh_callback.$(OBJEXT) glh_file.$(OBJEXT) \
-	glh_image.$(OBJEXT) glh_decoder.$(OBJEXT) glh_shader.$(OBJEXT)
+am_libglh_a_OBJECTS = glh_callback.$(OBJEXT) glh_error.$(OBJEXT) \
+	glh_file.$(OBJEXT) glh_image.$(OBJEXT) glh_decoder.$(OBJEXT) \
+	glh_shader.$(OBJEXT) glh_texture.$(OBJEXT) \
+	glh_window.$(OBJEXT) lodepng.$(OBJEXT)
 libglh_a_OBJECTS = $(am_libglh_a_OBJECTS)
 AM_V_P = $(am__v_P_@AM_V@)
 am__v_P_ = $(am__v_P_@AM_DEFAULT_V@)
@@ -152,8 +154,10 @@ DEFAULT_INCLUDES = -I.@am__isrc@ -I$(top_builddir)
 depcomp = $(SHELL) $(top_srcdir)/depcomp
 am__maybe_remake_depfiles = depfiles
 am__depfiles_remade = ./$(DEPDIR)/glh_callback.Po \
-	./$(DEPDIR)/glh_decoder.Po ./$(DEPDIR)/glh_file.Po \
-	./$(DEPDIR)/glh_image.Po ./$(DEPDIR)/glh_shader.Po
+	./$(DEPDIR)/glh_decoder.Po ./$(DEPDIR)/glh_error.Po \
+	./$(DEPDIR)/glh_file.Po ./$(DEPDIR)/glh_image.Po \
+	./$(DEPDIR)/glh_shader.Po ./$(DEPDIR)/glh_texture.Po \
+	./$(DEPDIR)/glh_window.Po ./$(DEPDIR)/lodepng.Po
 am__mv = mv -f
 COMPILE = $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) \
 	$(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS)
@@ -244,6 +248,8 @@ PKG_CONFIG = @PKG_CONFIG@
 PKG_CONFIG_LIBDIR = @PKG_CONFIG_LIBDIR@
 PKG_CONFIG_PATH = @PKG_CONFIG_PATH@
 RANLIB = @RANLIB@
+SDL2_CFLAGS = @SDL2_CFLAGS@
+SDL2_LIBS = @SDL2_LIBS@
 SET_MAKE = @SET_MAKE@
 SHELL = @SHELL@
 STRIP = @STRIP@
@@ -297,6 +303,7 @@ libglh_a_SOURCES = \
 	glh_callback.h	\
 	glh_callback.c	\
 	glh_error.h	\
+	glh_error.c	\
 	glh_file.h	\
 	glh_file.c	\
 	glh_image.h	\
@@ -304,8 +311,15 @@ libglh_a_SOURCES = \
 	glh_decoder.h	\
 	glh_decoder.c	\
 	glh_shader.h	\
-	glh_shader.c
+	glh_shader.c	\
+	glh_texture.h	\
+	glh_texture.c	\
+	glh_window.h	\
+	glh_window.c	\
+	lodepng.h	\
+	lodepng.c
 
+AM_CPPFLAGS = -DLODEPNG_NO_COMPILE_DISK
 all: all-am
 
 .SUFFIXES:
@@ -384,9 +398,13 @@ distclean-compile:
 
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/glh_callback.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/glh_decoder.Po@am__quote@ # am--include-marker
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/glh_error.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/glh_file.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/glh_image.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/glh_shader.Po@am__quote@ # am--include-marker
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/glh_texture.Po@am__quote@ # am--include-marker
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/glh_window.Po@am__quote@ # am--include-marker
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/lodepng.Po@am__quote@ # am--include-marker
 
 $(am__depfiles_remade):
 	@$(MKDIR_P) $(@D)
@@ -537,9 +555,13 @@ clean-am: clean-generic clean-libLIBRARIES mostlyclean-am
 distclean: distclean-am
 		-rm -f ./$(DEPDIR)/glh_callback.Po
 	-rm -f ./$(DEPDIR)/glh_decoder.Po
+	-rm -f ./$(DEPDIR)/glh_error.Po
 	-rm -f ./$(DEPDIR)/glh_file.Po
 	-rm -f ./$(DEPDIR)/glh_image.Po
 	-rm -f ./$(DEPDIR)/glh_shader.Po
+	-rm -f ./$(DEPDIR)/glh_texture.Po
+	-rm -f ./$(DEPDIR)/glh_window.Po
+	-rm -f ./$(DEPDIR)/lodepng.Po
 	-rm -f Makefile
 distclean-am: clean-am distclean-compile distclean-generic \
 	distclean-tags
@@ -587,9 +609,13 @@ installcheck-am:
 maintainer-clean: maintainer-clean-am
 		-rm -f ./$(DEPDIR)/glh_callback.Po
 	-rm -f ./$(DEPDIR)/glh_decoder.Po
+	-rm -f ./$(DEPDIR)/glh_error.Po
 	-rm -f ./$(DEPDIR)/glh_file.Po
 	-rm -f ./$(DEPDIR)/glh_image.Po
 	-rm -f ./$(DEPDIR)/glh_shader.Po
+	-rm -f ./$(DEPDIR)/glh_texture.Po
+	-rm -f ./$(DEPDIR)/glh_window.Po
+	-rm -f ./$(DEPDIR)/lodepng.Po
 	-rm -f Makefile
 maintainer-clean-am: distclean-am maintainer-clean-generic
 

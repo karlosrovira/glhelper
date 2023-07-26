@@ -1,0 +1,4 @@
+TODO
+====
+
+1. Complete tests for shaders (requires a GL context).

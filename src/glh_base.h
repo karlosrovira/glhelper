@@ -1,6 +1,7 @@
 /*********************************************************************
  * glh_base.h - Included in every source.
  ********************************************************************/
+#include "config.h"
 #include <assert.h>
 #include <stdio.h>
 #include <stdlib.h>

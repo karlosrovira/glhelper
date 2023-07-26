@@ -67,10 +67,11 @@ void glh_load_shader(GLenum           type,
   size_t size;
 
   error->type = GLH_ERROR_TYPE_OK;
-  glh_load_file(path, code, &size, error);
+  glh_load_file(path, &code, &size, error);
   if (error->type != GLH_ERROR_TYPE_OK)
     return;
   glh_compile_shader(type, code, sid, error);
+  free(code);
 }
 
 /********************************************************************/

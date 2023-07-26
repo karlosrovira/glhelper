@@ -13,7 +13,7 @@ void glh_message_callback(GLenum        source,
 			  const void*   userParam)
 {
   fprintf(stderr,
-	  "GL CALLBACK: %s | type = 0x%d, severity = 0x%d, message = %s",
+	  "GL CALLBACK: %s | type = 0x%d, severity = 0x%d, message = <<<%s>>>.\n",
 	  (type == GL_DEBUG_TYPE_ERROR ? "** GL ERROR **" : "" ),
 	  type,
 	  severity,

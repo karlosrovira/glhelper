@@ -5,6 +5,7 @@
 #include "glh_file.h"
 
 #include <fcntl.h>
+#include <string.h>
 #include <unistd.h>
 
 int glh_open_file(const char *fname, struct GlhError *error)
@@ -41,14 +42,12 @@ int glh_get_file_size(int fd, struct GlhError *error)
 
 void
 glh_load_file(const char      *fname,
-	      char            *buffer,
+	      char           **buffer,
 	      size_t          *size,
 	      struct GlhError *error)
 {
   assert(fname);
-  assert(buffer);
   assert(size);
-  assert(error);
   
   off_t pos = 0;
   int fd = 0;
@@ -61,13 +60,14 @@ glh_load_file(const char      *fname,
   pos = glh_get_file_size(fd, error);
   if (pos < 0)
     goto exit;
-  buffer = (char *) xmalloc(pos);
+  *buffer = (char *) xmalloc(pos+1);
+  memset(*buffer, 0, pos+1);
   *size = pos;
-  retval = read(fd, buffer, *size);
+  retval = read(fd, *buffer, *size);
   if (retval < *size)
     {
       error->type = GLH_ERROR_TYPE_READ_FILE;
-      free(buffer);
+      free(*buffer);
       goto exit;
     }
 
@@ -77,13 +77,11 @@ glh_load_file(const char      *fname,
 
 void
 glh_load_ufile(const char      *fname,
-	       unsigned char   *buffer,
+	       unsigned char  **buffer,
 	       size_t          *size,
 	       struct GlhError *error)
 {
   assert(fname);
-  assert(buffer);
-  assert(size);
   assert(error);
   
   off_t pos = 0;
@@ -97,13 +95,14 @@ glh_load_ufile(const char      *fname,
   pos = glh_get_file_size(fd, error);
   if (pos < 0)
     goto exit;
-  buffer = (unsigned char *) xmalloc(pos);
+  *buffer = (unsigned char *) xmalloc(pos);
+  memset(*buffer, 0, pos+1);
   *size = pos;
-  retval = read(fd, buffer, *size);
+  retval = read(fd, *buffer, *size);
   if (retval < *size)
     {
       error->type = GLH_ERROR_TYPE_READ_FILE;
-      free(buffer);
+      free(*buffer);
       goto exit;
     }
 
